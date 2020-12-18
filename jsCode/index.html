@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<title>jsCode</title>
+	<meta http-equiv="content-type" content="text/html; charset=gbk">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="applicable-device" content="mobile">
+	<meta name="robots" content="noindex">
+
+
+	<style>
+		.cont{
+			display:flex;
+			width:300px;
+			flex-wrap:wrap;
+		}
+		.cont .one{
+			width:100px;
+			height:100px;
+			background:blue;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="cont">
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+		<div class="one"></div>
+	</div>
+	<h1>数组扁平化</h1>
+	<script>
+		let arr = [1, [2, [3, [4, 5]]], 6];
+		// // 1,flat（参数是展开数据的深度的意思）
+		// arr.flat(Infinity);
+		// //2,转成字符串后用正则去掉中括号
+		// JSON.parse('[' + JSON.stringify(arr).replace(/\[|\]/g, "") + ']');
+		// //3,函数递归，用reduce
+		// let fun = arr => {
+		// 	return arr.reduce((pre, cur) => {
+		// 		return pre.concat(Array.isArray(cur) ? fun(cur) : cur)
+		// 	}, [])
+		// }
+
+		// const res5 = [];
+		// const fn = arr => {
+		// 	for (let i = 0; i < arr.length; i++) {
+		// 		if (Array.isArray(arr[i])) {
+		// 			fn(arr[i]);
+		// 		} else {
+		// 			res5.push(arr[i]);
+		// 		}
+		// 	}
+		// }
+		// fn(arr)
+		// //console.log(res5);
+		// //toString(),join()都可以转成字符串，然后用split(",")来分割字符串成为数组
+	</script>
+	<h1>数组去重</h1>
+	<script>
+		//let arr2 = [1, 1, '1', 17, true, true, false, false, 'true', 'a', {}, {}];
+		// //1,利用set结构,不会有重复的值
+		// let res = Array.from(new Set(arr2));
+		// //2,两层for循环，然后用solice删除
+		// let len = arr2.length;
+		// for (let i = 0; i < len; i++) {
+		// 	for (let j = i + 1; j < len; j++) {
+		// 		if (arr2[i] === arr2[j]) {
+		// 			arr2.splice(j, 1);
+		// 			j--;
+		// 			len--;
+		// 		}
+		// 	}
+		// }
+		// //3,利用indexOf,includes等方法
+		// let res = [];
+		// for (let i = 0; i < arr2.length; i++) {
+		// 	if (res.indexOf(arr2[i]) == -1) {
+		// 		res.push(arr2[i])
+		// 	}
+		// }
+		// //4,利用filter
+		// let res = arr2.filter((item, index) => {
+		// 	return arr2.indexOf(item) === index
+		// })
+		// console.log(res)
+		// //5，利用map结构的has方法判断是否存在
+		// let map = new Map();
+		// let res = [];
+		// for (let i = 0; i < arr2.length; i++) {
+		// 	if (!map.has(arr2[i])) {
+		// 		map.set(arr2[i], true);
+		// 		res.push(arr2[i])
+		// 	}
+		// }
+
+	</script>
+	<h1>类数组转成数组（类数组是具有length属性，但是不具有数组原型上的方法。常见的类数组有arguments，dom操作方法返回的结果）</h1>
+	<script>
+		// //1，array.from
+		// let arr = Array.from(document.querySelectorAll('div'));
+		// //2，Array.prototype.slice.call()
+		// let arr = Array.prototype.slice.call(document.querySelectorAll('div'));
+		// //3，扩展运算符
+		// let arr = [...document.querySelectorAll('div')];
+		// //4，利用concat
+		// let arr = Array.prototype.concat([], document.querySelectorAll('div'))
+
+	</script>
+	<h1>实现Array.prototype.filter() (测试数组每个元素，如测试函数返回true，则保留元素，false则不保留)</h1>
+	<script>
+		// Array.prototype.fakeFilter = function (fn, context) {
+		// 	if (this == undefined) {
+		// 		throw new TypeError('this is null or not undefined');
+		// 	}
+		// 	if (typeof callback !== 'function') {
+		// 		throw new TypeError(callback + 'is not a function');
+		// 	}
+		// 	let res = [];
+		// 	let arr = this;
+		// 	for (let i = 0; i < arr.length; i++) {
+		// 		if (fn.call(context, arr[i], i, arr)) {
+		// 			res.push(arr[i])
+		// 		}
+		// 	}
+		// 	return res;
+		// };
+		// let arr4 = ["x", "y", "z", 1, 2, 3];
+
+		// console.log(arr4.fakeFilter(item => typeof item === "string"));
+
+
+	</script>
+	<h1>实现Array.prototype.map() (对数组每个元素进行函数的计算后返回新数组)</h1>
+	<script>
+		// Array.prototype.ownMap = function (fn, context) {
+		// 	if (this == undefined) {
+		// 		throw new TypeError('this is null or not undefined');
+		// 	}
+		// 	if (typeof fn !== 'function') {
+		// 		throw new TypeError(fn + 'is not a function');
+		// 	}
+		// 	let res = [];
+		// 	let arr = this;
+		// 	for (let i = 0; i < arr.length; i++) {
+		// 		res.push(fn.call(context, arr[i], i, arr))
+		// 	}
+		// 	return res;
+
+		// }
+		// let arr5 = [1, 2, 3];
+		// console.log(arr5.ownMap(item => item * 2));
+	</script>
+	<h1>Function.prototype.call()</h1>
+	<script>
+		// Function.prototype.call = function (context = window, ...args) {
+		// 	if (typeof this !== 'function') {
+		// 		throw new TypeError('Type error')
+		// 	}
+		// 	const fn = Symbol('fn');
+		// 	context[fn] = this;
+		// 	const res = context[fn](...args);
+		// 	delete context[fn];
+		// 	return res;
+		// }
+		// var arr6 = { x: 1, y: 2 };
+		// function test() {
+		// 	return this.x + this.y;
+		// }
+		// console.log(test.call(arr6))
+
+	</script>
+	<h1>debounce防抖(触发高频时间后n秒内函数只会执行一次,如果n秒内高频时间再次触发,则重新计算时间。)</h1>
+	<script>
+		// const debounce = (fn, time) => {
+		// 	let timer = null;
+		// 	return function () {
+		// 		clearTimeout(timer);
+		// 		timer = setTimeout(() => {
+		// 			fn.apply(this, arguments)
+		// 		}, time)
+		// 	}
+		// }
+		// function test() {
+		// 	console.log(1111);
+		// }
+		// window.onresize = debounce(test, 3000)
+
+
+	</script>
+	<h1>throttle节流（高频时间触发,但n秒内只会执行一次,所以节流会稀释函数的执行频率。）</h1>
+	<script>
+		// const throttle = (fn, time) => {
+		// 	let flag = true;
+		// 	return function () {
+		// 		if (!flag) return;
+		// 		flag = false;
+		// 		setTimeout(() => {
+		// 			fn.apply(this, arguments);
+		// 			flag = true;
+		// 		}, time)
+		// 	}
+		// }
+		// function test() {
+		// 	console.log(1111);
+		// }
+		// window.onresize = throttle(test, 3000)
+
+
+	</script>
+	<h1>函数柯里化</h1>
+	<script>
+		// function add() {
+		// 	const _args = [...arguments];
+		// 	function fn() {
+		// 		_args.push(...arguments);
+		// 		return fn;
+		// 	}
+		// 	fn.toString = function () {
+		// 		return _args.reduce((sum, cur) => { sum + cur });
+		// 	}
+		// 	return fn;
+		// }
+		// let tt = add(1)(2)(3)(4);
+		// console.log(tt.toString());
+
+
+
+	</script>
+	<h1>模拟new操作</h1>
+	<script>
+		// function New(ctor, ...args) {
+		// 	if (typeof ctor !== 'function') {
+		// 		throw new TypeError(ctor + 'is not a Function')
+		// 	}
+		// 	const obj = Object.create(ctor.prototype);//新建一个对象，将它的_proto_指向目标函数的原型对象
+		// 	const res = ctor.apply(obj, args);//相当于用obj去执行ctor里面的内容
+		// 	const isObject = typeof res === 'object' && res !== null;
+		// 	const isFunction = typeof res == 'function';
+		// 	return isObject || isFunction ? res : obj;
+		// }
+		// function P(name) {
+		// 	this.name = name;
+		// 	this.tt = function () { }
+		// }
+		// let pp = New(P, 'j');
+
+	</script>
+	<h1>实现instanceof</h1>
+	<script>
+		//其实是判断prototype和_proto_，_proto_可以用Object.getPrototypeOF来获取
+		// const myInstanceof = (left, right) => {
+		// 	if (typeof left !== 'function' || left === null) return false;
+		// 	let proto = Object.getPrototypeOf(left);
+		// 	while (true) {
+		// 		console.log(proto);
+		// 		if (proto === null) return false;
+		// 		if (proto === right.prototype) return true;
+		// 		proto = Object.getPrototypeOf(proto);
+		// 	}
+		// }
+		// console.log(myInstanceof(Object, Object));//true
+
+	</script>
+	<h1>原型继承</h1>
+	<script>
+		// function Parent() {
+		// 	this.name = 'parent';
+		// }
+		// function Child() {
+		// 	Parent.call(this);
+		// 	this.type = 'children';
+		// }
+		// Child.prototype = Object.create(Parent.prototype);
+		// Child.prototype.constructor = Parent;
+
+
+	</script>
+	<script>
+
+		var webName = 'long';
+		function wrap() {
+			let func = () => {
+				this.webName = 'stort'
+				console.log(`test is ${this.webName} `);
+			}
+			func();
+			console.log(this.webName)
+		}
+		wrap();
+
+	</script>
+
+</body>
+
+
+
+</html>
